@@ -1,11 +1,13 @@
 puts "Enter the side \"a\" of a triangle"
-a = Integer(gets.chomp)
+a = gets.chomp.to_i
 
 puts "Enter the side \"b\" of a triangle"
-b = Integer(gets.chomp)
+b = gets.chomp.to_i
 
 puts "Enter the side \"c\" of a triangle"
-c = Integer(gets.chomp)
+c = gets.chomp.to_i
+
+side1, side2, hypotenuse = [a, b, c].sort
 
 if a == b && a == c
   # i.e. 1, 1, 1
@@ -13,7 +15,7 @@ if a == b && a == c
 elsif a == b || a == c || b == c
   # i.e. 1, 2, 1
   puts "isosceles triangle"
-elsif (a ** 2 == b ** 2 + c ** 2) || (b ** 2 == a ** 2 + c ** 2) || (c ** 2 == b ** 2 + a ** 2)
+elsif hypotenuse ** 2 == side1 ** 2 + side2 ** 2
   # i.e. 3, 4, 5
   puts "right triangle"
 else

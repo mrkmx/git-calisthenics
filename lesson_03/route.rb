@@ -12,6 +12,6 @@ class Route
   end
 
   def remove_station(station)
-    @stations.delete(station)
+    @stations.delete(station) unless [@from, @to].include?(station)
   end
 end

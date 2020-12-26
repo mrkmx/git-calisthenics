@@ -15,14 +15,18 @@ class Train
     @speed = 0
   end
 
+  def stopped?
+    @speed == 0
+  end
+
   def add_carriage(carriage)
-    if @speed == 0 && carriage.type == @type
+    if stopped? && correct_carriage_type?(carriage)
       @carriages << carriage
     end
   end
 
   def remove_carriage
-    if @speed == 0 && carriage.type == @type
+    if stopped?
       @carriages.pop if @carriages.length > 1
     end
   end
@@ -63,5 +67,9 @@ class Train
   # Вынесен в private, т.к. это вспомогательный метод, который не нужен в интерфейсе класса
   def current_station_index
     @route.stations.index(@current_station)
+  end
+
+  def correct_carriage_type?(carriage)
+    carriage.type == @type
   end
 end

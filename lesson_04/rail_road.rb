@@ -234,13 +234,13 @@ class RailRoad
 
   def show_trains
     puts "Список поездов:"
-    @trains.each_with_index {|train, index| puts "#{index + 1}: #{train.name}"}
+    @trains.each_with_index(1) {|train, index| puts "#{index}: #{train.name}"}
     info
   end
 
   def show_routes
     puts "Список маршрутов:"
-    @routes.each_with_index {|route, index| puts "#{index + 1}: #{route.stations}"}
+    @routes.each_with_index(1) {|route, index| puts "#{index}: #{route.stations}"}
     info
   end
 end

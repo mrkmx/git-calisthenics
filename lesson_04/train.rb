@@ -2,7 +2,7 @@ class Train
   attr_accessor :speed
   attr_reader :current_station, :carriages, :name, :type
 
-  TYPES = [:passenger, :cargo].freeze
+  TYPES = {passenger: "Пассажирский", cargo: "Грузовой"}
 
   def initialize(name, type)
     @name = name

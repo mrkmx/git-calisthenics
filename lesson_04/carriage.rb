@@ -1,7 +1,7 @@
 class Carriage
   attr_reader :type
   
-  TYPES = [:passenger, :cargo].freeze
+  TYPES = {passenger: "Пассажирский", cargo: "Грузовой"}
 
   def initialize(type)
     @type = TYPES[type]

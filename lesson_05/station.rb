@@ -1,9 +1,16 @@
 class Station
+  @@stations = []
+
   attr_reader :trains, :name
 
   def initialize(name)
     @name = name
     @trains = []
+    @@stations << self
+  end
+
+  def self.all
+    @@stations
   end
 
   def count_trains_by_type(type)

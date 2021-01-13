@@ -1,7 +1,9 @@
-require_relative 'manufacturer.rb'
+require_relative 'manufacturer'
+require_relative 'instance_counter'
 
 class Train
   include Manufacturer
+  include InstanceCounter
 
   attr_accessor :speed
   attr_reader :current_station, :carriages, :number, :type
@@ -16,6 +18,7 @@ class Train
     @type = TYPES[type]
     @carriages = []
     @@trains[number] = self
+    register_instance
   end
 
   def self.find(number)

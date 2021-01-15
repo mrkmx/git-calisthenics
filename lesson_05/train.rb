@@ -1,14 +1,28 @@
+require_relative 'manufacturer'
+require_relative 'instance_counter'
+
 class Train
+  include Manufacturer
+  include InstanceCounter
+
   attr_accessor :speed
-  attr_reader :current_station, :carriages, :name, :type
+  attr_reader :current_station, :carriages, :number, :type
+
+  @@trains = {}
 
   TYPES = {passenger: "Пассажирский", cargo: "Грузовой"}
 
-  def initialize(name, type)
-    @name = name
+  def initialize(number, type)
+    @number = number
     @speed = 0
     @type = TYPES[type]
     @carriages = []
+    @@trains[number] = self
+    register_instance
+  end
+
+  def self.find(number)
+    @@trains[number]
   end
 
   def stop

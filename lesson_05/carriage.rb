@@ -1,4 +1,8 @@
+require_relative 'manufacturer'
+
 class Carriage
+  include Manufacturer
+  
   attr_reader :type
   
   TYPES = {passenger: "Пассажирский", cargo: "Грузовой"}

@@ -8,9 +8,9 @@ class Route
   attr_reader :stations
 
   def initialize(from, to)
-    validate!
     @from = from
     @to = to
+    validate!
     @stations = [@from, @to]
     register_instance
   end

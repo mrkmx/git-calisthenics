@@ -15,10 +15,10 @@ class Train
   TYPES = {passenger: "Пассажирский", cargo: "Грузовой"}
 
   def initialize(number, type)
-    validate!
     @number = number
     @speed = 0
     @type = TYPES[type]
+    validate!
     @carriages = []
     @@trains[number] = self
     register_instance

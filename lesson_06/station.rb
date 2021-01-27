@@ -1,7 +1,9 @@
 require_relative 'instance_counter'
+require_relative 'valid'
 
 class Station
   include InstanceCounter
+  include Valid
 
   @@stations = []
 

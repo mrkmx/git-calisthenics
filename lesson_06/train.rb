@@ -89,7 +89,7 @@ class Train
   end
 
   def validate!
-    regexp = /^[a-z0-9]{3}-?[a-z0-9]{2}$/i
+    regexp = /^[а-яa-z0-9]{3}-?[а-яa-z0-9]{2}$/i
 
     raise "The \"number\" field cannot be empty" if number.nil?
     raise "Wrong format of the \"number\" field (3 digits and/or letters,\

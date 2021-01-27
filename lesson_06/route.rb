@@ -1,7 +1,9 @@
 require_relative 'instance_counter'
+require_relative 'valid'
 
 class Route
   include InstanceCounter
+  include Valid
 
   attr_reader :stations
 

@@ -8,6 +8,7 @@ class Station
   attr_reader :trains, :name
 
   def initialize(name)
+    validate!
     @name = name
     @trains = []
     @@stations << self
@@ -29,5 +30,11 @@ class Station
 
   def remove_train(train)
     @trains.delete(train)
+  end
+
+  private
+  
+  def validate!
+    raise "The \"name\" field cannot be empty" if name.nil?
   end
 end

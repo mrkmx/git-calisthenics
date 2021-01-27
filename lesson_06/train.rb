@@ -13,6 +13,7 @@ class Train
   TYPES = {passenger: "Пассажирский", cargo: "Грузовой"}
 
   def initialize(number, type)
+    validate!
     @number = number
     @speed = 0
     @type = TYPES[type]
@@ -85,5 +86,14 @@ class Train
 
   def correct_carriage_type?(carriage)
     carriage.type == @type
+  end
+
+  def validate!
+    regexp = /^[a-z0-9]{3}-?[a-z0-9]{2}$/i
+
+    raise "The \"number\" field cannot be empty" if number.nil?
+    raise "Wrong format of the \"number\" field (3 digits and/or letters,\
+     hyphen (unnecessary), 2 digits and/or letters)" if number =~ regexp
+    raise "Wrong carriage type (:passenger or :cargo)" unless [:passenger, :cargo].include? type
   end
 end

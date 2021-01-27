@@ -18,10 +18,10 @@ class Train
     @number = number
     @speed = 0
     @type = TYPES[type]
-    validate!
     @carriages = []
     @@trains[number] = self
     register_instance
+    validate!
   end
 
   def self.find(number)
@@ -93,9 +93,9 @@ class Train
   def validate!
     regexp = /^[а-яa-z0-9]{3}-?[а-яa-z0-9]{2}$/i
 
-    raise "The \"number\" field cannot be empty" if number.nil?
+    raise "The \"number\" field cannot be empty" if number.length > 0
     raise "Wrong format of the \"number\" field (3 digits and/or letters,\
-     hyphen (unnecessary), 2 digits and/or letters)" if number =~ regexp
-    raise "Wrong carriage type (:passenger or :cargo)" unless [:passenger, :cargo].include? type
+     hyphen (unnecessary), 2 digits and/or letters)" if number !~ regexp
+    raise "Wrong carriage type (:passenger or :cargo)" unless ["Пассажирский", "Грузовой"].include? type
   end
 end

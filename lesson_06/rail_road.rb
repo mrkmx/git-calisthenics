@@ -30,6 +30,7 @@ class RailRoad
         info
       else
         puts "Неизвестная команда"
+        menu
     end
   end
 
@@ -48,6 +49,9 @@ class RailRoad
         create_route
       when 3
         create_train
+      else
+        puts "Неизвестная команда"
+        create
     end
   end
 
@@ -78,6 +82,9 @@ class RailRoad
         add_new_carriage
       when 7
         remove_carriage
+      else
+        puts "Неизвестная команда"
+        operations
     end
   end
 
@@ -96,6 +103,9 @@ class RailRoad
         show_routes
       when 3
         show_trains
+      else
+        puts "Неизвестная команда"
+        info
     end
   end
 
@@ -109,41 +119,62 @@ class RailRoad
         show_stations
       when 2
         show_trains_on_station
+      else
+        puts "Неизвестная команда"
+        show_stations_menu
     end
   end
   
   # Create actions
   
   def create_station
-    puts "Введите название станции:"
-    name = gets.chomp
-    station = Station.new(name)
+    begin
+      puts "Введите название станции:"
+      name = gets.chomp
+      station = Station.new(name)
+    rescue RuntimeError => err
+      puts "Ошибка: #{err.message}"
+      retry
+    end
     @stations << station
     create
   end
 
   def create_route
-    if @stations.length < 2
-      puts "Нельзя создавать маршрут без станций"
+    begin
+      raise "Нельзя создавать маршрут без станций" if @stations.length < 2
+    rescue RuntimeError => err
+      puts "Ошибка: #{err.message}"
       create
     end
-    puts "Название станции отправления"
-    input_from = gets.chomp
-    puts "Название станции назначения"
-    input_to = gets.chomp
-    from = @stations.find {|s| input_from == s.name}
-    to = @stations.find {|s| input_to == s.name}
-    route = Route.new(from, to)
-    @routes << route
-    create
+    begin
+      puts "Название станции отправления"
+      input_from = gets.chomp
+      puts "Название станции назначения"
+      input_to = gets.chomp
+      from = @stations.find {|s| input_from == s.name}
+      to = @stations.find {|s| input_to == s.name}
+      route = Route.new(from, to)
+    rescue RuntimeError => err
+      puts "Ошибка: #{err.message}"
+      retry
+    end
+      @routes << route
+      puts @routes
+      create
   end
 
   def create_train
-    puts "Введите название поезда:"
-    name = gets.chomp
-    puts "Тип поезда (1 - пассажирский, 2 - грузовой)"
-    type = gets.chomp.to_i
-    train = type == 1 ? PassengerTrain.new(name) : CargoTrain.new(name)
+    begin
+      puts "Введите название поезда:"
+      name = gets.chomp
+      puts "Тип поезда (1 - пассажирский, 2 - грузовой)"
+      type = gets.chomp.to_i
+      train = type == 1 ? PassengerTrain.new(name) : CargoTrain.new(name)
+    rescue RuntimeError => err
+      puts "Ошибка: #{err.message}"
+      retry
+    end
     @trains << train
     create
   end
@@ -234,13 +265,13 @@ class RailRoad
 
   def show_trains
     puts "Список поездов:"
-    @trains.each_with_index(1) {|train, index| puts "#{index}: #{train.name}"}
+    @trains.each.with_index(1) {|train, index| puts "#{index}: #{train.number}"}
     info
   end
 
   def show_routes
     puts "Список маршрутов:"
-    @routes.each_with_index(1) {|route, index| puts "#{index}: #{route.stations}"}
+    @routes.each.with_index(1) {|route, index| puts "#{index}: #{route.stations}"}
     info
   end
 end

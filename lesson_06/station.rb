@@ -37,6 +37,6 @@ class Station
   private
   
   def validate!
-    raise "The \"name\" field cannot be empty" if name.nil?
+    raise "The \"name\" field cannot be empty" unless name
   end
 end

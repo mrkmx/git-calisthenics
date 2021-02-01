@@ -81,7 +81,7 @@ class Train
   end
 
   def each_carriage(&block)
-    raise "No carriages" if @carriages.empty?
+    return if @carriages.empty?
     @carriages.each { |carriage| yield(carriage) }
   end
 

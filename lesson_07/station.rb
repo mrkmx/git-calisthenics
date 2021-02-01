@@ -35,7 +35,7 @@ class Station
   end
 
   def each_train(&block)
-    raise "No trains" if @trains.empty?
+    return if @trains.empty?
     @trains.each { |train| yield(train) }
   end
 

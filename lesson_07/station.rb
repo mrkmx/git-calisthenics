@@ -34,6 +34,11 @@ class Station
     @trains.delete(train)
   end
 
+  def trains_list(&block)
+    raise "No trains" if @trains.empty?
+    @trains.each { |train| yield(train) }
+  end
+
   private
   
   def validate!

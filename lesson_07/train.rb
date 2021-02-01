@@ -80,6 +80,11 @@ class Train
     @route.stations[current_station_index - 1]
   end
 
+  def carriages_list(&block)
+    raise "No carriages" if @carriages.empty?
+    @carriages.each { |carriage| yield(carriage) }
+  end
+
   private
   # Вынесен в private, т.к. это вспомогательный метод, который не нужен в интерфейсе класса
   def current_station_index

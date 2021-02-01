@@ -60,10 +60,11 @@ class RailRoad
     puts "1 - удалить станцию"
     puts "2 - добавить станцию в маршрут"
     puts "3 - добавить маршрут к поезду и перенести на 1ю станцию маршрута"
-    puts "4 - отправить вагон на следующую станцию"
-    puts "5 - отправить вагон на предыдущую станцию"
+    puts "4 - отправить поезд на следующую станцию"
+    puts "5 - отправить поезд на предыдущую станцию"
     puts "6 - прицепить вагон к поезду"
     puts "7 - отцепить вагон от поезда"
+    puts "8 - загрузить вагон"
     puts "0 - назад"
     choise = gets.chomp.to_i
     menu if choise == 0
@@ -82,6 +83,8 @@ class RailRoad
         add_new_carriage
       when 7
         remove_carriage
+      when 8
+        load_carriage
       else
         puts "Неизвестная команда"
         operations
@@ -93,6 +96,7 @@ class RailRoad
     puts "1 - станции"
     puts "2 - маршруты"
     puts "3 - поезда"
+    puts "4 - вагоны"
     puts "0 - назад"
     choise = gets.chomp.to_i
     menu if choise == 0
@@ -103,6 +107,8 @@ class RailRoad
         show_routes
       when 3
         show_trains
+      when 4
+        show_carriages
       else
         puts "Неизвестная команда"
         info
@@ -170,7 +176,14 @@ class RailRoad
       name = gets.chomp
       puts "Тип поезда (1 - пассажирский, 2 - грузовой)"
       type = gets.chomp.to_i
-      train = type == 1 ? PassengerTrain.new(name) : CargoTrain.new(name)
+      if type == 1
+        puts "Количество пассажирских мест в вагоне"
+        seats = gets.chomp.to_i
+      elsif type == 2
+        puts "Объем грузового вагона"
+        volume = gets.chomp.to_i
+      end
+      train = type == 1 ? PassengerTrain.new(name, seats) : CargoTrain.new(name, volume)
     rescue RuntimeError => err
       puts "Ошибка: #{err.message}"
       retry
@@ -248,6 +261,26 @@ class RailRoad
     operations
   end
 
+  def load_carriage
+    puts "Введите номер поезда"
+    train_number = gets.chomp.to_i
+    train = @trains.find {|t| train_number == t.name}
+    type = train.type
+
+    puts "Введите номер вагона"
+    carriage_number = gets.chomp.to_i
+    carriage = train.carriages[carriage_number]
+
+    if type == "Пассажирский"
+      carriage.take_seat
+    elsif type == "Грузовой"
+      puts "Введите объем груза"
+      volume = gets.chomp.to_i
+      carriage.take_volume(volume)
+    end
+    operations
+  end
+
   # Info actions
 
   def show_stations
@@ -258,8 +291,11 @@ class RailRoad
 
   def show_trains_on_station
     puts "Введите номер станции:"
-    station = gets.chomp.to_i
-    puts @stations[station].trains
+    name = gets.chomp.to_i
+    station = @stations.find {|s| name == s.name}
+    station.trains_list do |train|
+      puts "Поезд № #{train.number} (#{train.type}), #{train.carriages.length} вагонов"
+    end
     info
   end
 
@@ -272,6 +308,26 @@ class RailRoad
   def show_routes
     puts "Список маршрутов:"
     @routes.each.with_index(1) {|route, index| puts "#{index}: #{route.stations}"}
+    info
+  end
+
+  def show_carriages
+    puts "Введите номер поезда:"
+    number = gets.chomp.to_i
+    train = @trains.find {|t| number == t.name}
+    type = train.type
+    counter = 0
+    if type == "Пассажирский"
+      train.carriages_list do |carriage|
+        puts "Вагон № #{counter += 1}"
+        puts "Мест #{carriage.taken_seats}/#{carriage.seats}"
+      end
+    elsif type == "Грузовой"
+      train.carriages_list do |carriage|
+        puts "Вагон № #{counter += 1}"
+        puts "Загружено #{carriage.loaded}/#{carriage.volume}" 
+      end
+    end
     info
   end
 end

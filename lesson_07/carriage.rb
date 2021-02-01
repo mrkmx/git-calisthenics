@@ -13,17 +13,13 @@ class Carriage
     @loaded = 0
   end
 
-  def take_volume(vol = 1)
-    if vol == 1
-      raise "not enough space" if vol + @loaded > @volume
-      @loaded += vol
-    else
-      raise "all seats are taken" unless @loaded == @volume
-      @loaded += 1
-    end
+  def take_volume(volume = 1)
+    raise "not enough space"  if vol > free_volume
+    
+    @loaded += vol
   end
 
-  def free_volume?
+  def free_volume
     @volume - @loaded
   end
 end

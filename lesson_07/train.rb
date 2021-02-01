@@ -80,7 +80,7 @@ class Train
     @route.stations[current_station_index - 1]
   end
 
-  def carriages_list(&block)
+  def each_carriage(&block)
     raise "No carriages" if @carriages.empty?
     @carriages.each { |carriage| yield(carriage) }
   end

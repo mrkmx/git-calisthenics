@@ -293,7 +293,7 @@ class RailRoad
     puts "Введите номер станции:"
     name = gets.chomp.to_i
     station = @stations.find {|s| name == s.name}
-    station.trains_list do |train|
+    station.each_train do |train|
       puts "Поезд № #{train.number} (#{train.type}), #{train.carriages.length} вагонов"
     end
     info
@@ -318,12 +318,12 @@ class RailRoad
     type = train.type
     counter = 0
     if type == "Пассажирский"
-      train.carriages_list do |carriage|
+      train.each_carriage do |carriage|
         puts "Вагон № #{counter += 1}"
         puts "Мест #{carriage.taken_seats}/#{carriage.seats}"
       end
     elsif type == "Грузовой"
-      train.carriages_list do |carriage|
+      train.each_carriage do |carriage|
         puts "Вагон № #{counter += 1}"
         puts "Загружено #{carriage.loaded}/#{carriage.volume}" 
       end

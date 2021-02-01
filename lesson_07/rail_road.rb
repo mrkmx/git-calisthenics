@@ -272,7 +272,7 @@ class RailRoad
     carriage = train.carriages[carriage_number]
 
     if type == "Пассажирский"
-      carriage.take_seat
+      carriage.take_volume
     elsif type == "Грузовой"
       puts "Введите объем груза"
       volume = gets.chomp.to_i

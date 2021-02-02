@@ -4,3 +4,6 @@ Style/ClassVars:
   Enabled: false
 Style/AsciiComments:
   Enabled: false
+Metrics:
+  Exclude:
+    - "rail_road.rb"

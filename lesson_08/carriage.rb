@@ -15,7 +15,7 @@ class Carriage
     @loaded = 0
   end
 
-  def take_volume(_volume = 1)
+  def take_volume(vol = 1)
     raise 'not enough space' if vol > free_volume
 
     @loaded += vol

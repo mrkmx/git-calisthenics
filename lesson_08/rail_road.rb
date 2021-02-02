@@ -22,7 +22,7 @@ class RailRoad
     puts '3 - Вывод информации об объектах'
     puts '0 - Выход'
     choise = gets.chomp.to_i
-    return if choise == 0
+    return if choise.zero?
 
     case choise
     when 1
@@ -44,7 +44,7 @@ class RailRoad
     puts '3 - поезд'
     puts '0 - назад'
     choise = gets.chomp.to_i
-    menu if choise == 0
+    menu if choise.zero?
     case choise
     when 1
       create_station
@@ -70,7 +70,7 @@ class RailRoad
     puts '8 - загрузить вагон'
     puts '0 - назад'
     choise = gets.chomp.to_i
-    menu if choise == 0
+    menu if choise.zero?
     case choise
     when 1
       delete_station
@@ -102,7 +102,7 @@ class RailRoad
     puts '4 - вагоны'
     puts '0 - назад'
     choise = gets.chomp.to_i
-    menu if choise == 0
+    menu if choise.zero?
     case choise
     when 1
       show_stations_menu

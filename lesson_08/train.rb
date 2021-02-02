@@ -35,7 +35,7 @@ class Train
   end
 
   def stopped?
-    @speed == 0
+    @speed.zero?
   end
 
   def add_carriage(carriage)
@@ -100,7 +100,7 @@ class Train
   def validate!
     regexp = /^[а-яa-z0-9]{3}-?[а-яa-z0-9]{2}$/i
 
-    raise 'The "number" field cannot be empty' if number.length > 0
+    raise 'The "number" field cannot be empty' if number.length.positive?
 
     if number !~ regexp
       raise "Wrong format of the \"number\" field (3 digits and/or letters,\

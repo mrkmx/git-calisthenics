@@ -2,10 +2,10 @@ require_relative 'manufacturer'
 
 class Carriage
   include Manufacturer
-  
+
   attr_reader :type, :loaded, :volume
-  
-  TYPES = {passenger: "Пассажирский", cargo: "Грузовой"}
+
+  TYPES = { passenger: 'Пассажирский', cargo: 'Грузовой' }.freeze
 
   def initialize(type, volume)
     @type = TYPES[type]
@@ -13,9 +13,9 @@ class Carriage
     @loaded = 0
   end
 
-  def take_volume(volume = 1)
-    raise "not enough space"  if vol > free_volume
-    
+  def take_volume(_volume = 1)
+    raise 'not enough space' if vol > free_volume
+
     @loaded += vol
   end
 

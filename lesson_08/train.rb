@@ -12,7 +12,7 @@ class Train
 
   @@trains = {}
 
-  TYPES = {passenger: "Пассажирский", cargo: "Грузовой"}
+  TYPES = { passenger: 'Пассажирский', cargo: 'Грузовой' }.freeze
 
   def initialize(number, type)
     @number = number
@@ -37,9 +37,7 @@ class Train
   end
 
   def add_carriage(carriage)
-    if stopped? && correct_carriage_type?(carriage)
-      @carriages << carriage
-    end
+    @carriages << carriage if stopped? && correct_carriage_type?(carriage)
   end
 
   def remove_carriage
@@ -75,17 +73,19 @@ class Train
   def next_station
     @route.stations[current_station_index + 1]
   end
-  
+
   def prev_station
     @route.stations[current_station_index - 1]
   end
 
-  def each_carriage(&block)
+  def each_carriage
     return if @carriages.empty?
+
     @carriages.each { |carriage| yield(carriage) }
   end
 
   private
+
   # Вынесен в private, т.к. это вспомогательный метод, который не нужен в интерфейсе класса
   def current_station_index
     @route.stations.index(@current_station)
@@ -98,9 +98,12 @@ class Train
   def validate!
     regexp = /^[а-яa-z0-9]{3}-?[а-яa-z0-9]{2}$/i
 
-    raise "The \"number\" field cannot be empty" if number.length > 0
-    raise "Wrong format of the \"number\" field (3 digits and/or letters,\
-     hyphen (unnecessary), 2 digits and/or letters)" if number !~ regexp
-    raise "Wrong carriage type (:passenger or :cargo)" unless ["Пассажирский", "Грузовой"].include? type
+    raise 'The "number" field cannot be empty' if number.length > 0
+
+    if number !~ regexp
+      raise "Wrong format of the \"number\" field (3 digits and/or letters,\
+       hyphen (unnecessary), 2 digits and/or letters)"
+    end
+    raise 'Wrong carriage type (:passenger or :cargo)' unless %w[Пассажирский Грузовой].include? type
   end
 end

@@ -26,7 +26,7 @@ class Route
   private
 
   def validate!
-    raise "You must set up a departure station" if from.nil?
-    raise "You must set up an arrival station" if to.nil?
+    raise 'You must set up a departure station' if from.nil?
+    raise 'You must set up an arrival station' if to.nil?
   end
 end

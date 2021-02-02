@@ -22,10 +22,10 @@ class Station
   end
 
   def count_trains_by_type(type)
-    counter = @trains.count {|t| type == t.train_type}
+    counter = @trains.count { |t| type == t.train_type }
     puts "#{counter} #{type} trains on \"#{@name}\""
   end
-  
+
   def add_train(train)
     @trains << train
   end
@@ -34,14 +34,15 @@ class Station
     @trains.delete(train)
   end
 
-  def each_train(&block)
+  def each_train
     return if @trains.empty?
+
     @trains.each { |train| yield(train) }
   end
 
   private
-  
+
   def validate!
-    raise "The \"name\" field cannot be empty" unless name
+    raise 'The "name" field cannot be empty' unless name
   end
 end

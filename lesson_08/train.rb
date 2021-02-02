@@ -43,9 +43,9 @@ class Train
   end
 
   def remove_carriage
-    if stopped?
-      @carriages.pop if @carriages.length > 1
-    end
+    return unless stopped?
+
+    @carriages.pop if @carriages.length > 1
   end
 
   def add_route(route)

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Valid
+module Validation
   def valid?
     validate!
     true

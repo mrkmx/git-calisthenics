@@ -1,15 +1,17 @@
 # frozen_string_literal: true
 
 require_relative 'instance_counter'
-require_relative 'valid'
+require_relative 'validation'
 
 class Station
   include InstanceCounter
-  include Valid
+  include Validation
 
   @@stations = []
 
   attr_reader :trains, :name
+  validate :name, :presence
+  validate :name, :type, String
 
   def initialize(name)
     @name = name
@@ -40,11 +42,5 @@ class Station
     return if @trains.empty?
 
     @trains.each { |train| yield(train) }
-  end
-
-  private
-
-  def validate!
-    raise 'The "name" field cannot be empty' unless name
   end
 end

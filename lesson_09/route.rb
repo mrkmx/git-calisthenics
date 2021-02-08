@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
 require_relative 'instance_counter'
-require_relative 'valid'
+require_relative 'validation'
 
 class Route
   include InstanceCounter
-  include Valid
+  include Validation
 
   attr_reader :stations
+  validate :stations, :presence
+  validate :stations, :type, Array
 
   def initialize(from, to)
     @from = from
@@ -27,8 +29,4 @@ class Route
 
   private
 
-  def validate!
-    raise 'You must set up a departure station' if from.nil?
-    raise 'You must set up an arrival station' if to.nil?
-  end
 end

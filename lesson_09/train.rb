@@ -2,15 +2,19 @@
 
 require_relative 'manufacturer'
 require_relative 'instance_counter'
-require_relative 'valid'
+require_relative 'validation'
 
 class Train
   include Manufacturer
   include InstanceCounter
-  include Valid
+  include Validation
+
+  regexp = /^[а-яa-z0-9]{3}-?[а-яa-z0-9]{2}$/i
 
   attr_accessor :speed
   attr_reader :current_station, :carriages, :number, :type
+  validate :number, :presence
+  validate :number, :format, regexp
 
   @@trains = {}
 
@@ -97,15 +101,4 @@ class Train
     carriage.type == @type
   end
 
-  def validate!
-    regexp = /^[а-яa-z0-9]{3}-?[а-яa-z0-9]{2}$/i
-
-    raise 'The "number" field cannot be empty' if number.length.positive?
-
-    if number !~ regexp
-      raise "Wrong format of the \"number\" field (3 digits and/or letters,\
-       hyphen (unnecessary), 2 digits and/or letters)"
-    end
-    raise 'Wrong carriage type (:passenger or :cargo)' unless %w[Пассажирский Грузовой].include? type
-  end
 end

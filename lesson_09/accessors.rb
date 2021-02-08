@@ -18,6 +18,7 @@ module Accessors
     define_method(name) { instance_variable_get(var_name) }
     define_method("#{name}=") do |value|
       raise 'Type error' unless value.is_a?(_class)
+
       instance_variable_set(var_name, value)
     end
   end

@@ -26,7 +26,4 @@ class Route
   def remove_station(station)
     @stations.delete(station) unless [@from, @to].include?(station)
   end
-
-  private
-
 end

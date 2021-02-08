@@ -100,5 +100,4 @@ class Train
   def correct_carriage_type?(carriage)
     carriage.type == @type
   end
-
 end

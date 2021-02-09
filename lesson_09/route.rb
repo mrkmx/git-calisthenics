@@ -9,7 +9,7 @@ class Route
 
   attr_reader :stations
   validate :stations, :presence
-  validate :stations, :type, Array
+  validate :stations, :validate_type, Array
 
   def initialize(from, to)
     @from = from

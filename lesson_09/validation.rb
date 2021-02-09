@@ -39,7 +39,7 @@ module Validation
       raise 'Wrong format' if value !~ options
     end
 
-    def type(value, options)
+    def validate_type(value, options)
       raise 'Mismatched class' if value.class == options
     end
   end
